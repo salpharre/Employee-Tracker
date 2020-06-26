@@ -11,7 +11,7 @@ CREATE TABLE department (
   -- Integer called "id" that auto increments and cannot contain null
   id INTEGER NOT NULL AUTO_INCREMENT
   -- A string column called "name" which cannot contain null --
-  name VARCHAR(30) NOT NULL,
+  department_name VARCHAR(30) NOT NULL,
   -- Keywords that define which column is the primary key that uniquely defines the table
   PRIMARY KEY (id)
 );

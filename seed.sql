@@ -2,7 +2,9 @@
 
 USE employee_trackerDB;
 
-INSERT INTO department (name) VALUES (Sales);
+INSERT INTO department (department_name) 
+VALUES (Sales),
+       (Logistics);
 
 INSERT INTO role (title, salary, department_id) VALUES ();
 
