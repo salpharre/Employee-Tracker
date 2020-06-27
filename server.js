@@ -1,8 +1,14 @@
 const mysql = require("mysql");
 const inquirer = require("inquirer");
 const cTable = require("console.table");
+const Employee = require("./lib/Employee");
+const Department = require("./lib/Department");
+const Role = require("./lib/Role");
 
 //const all the objects here in global so can call on the different funcions
+const employee = new Employee();
+const department = new Department();
+const role = new Role(); 
 
 // create the connection information for the sql database
 const connection = mysql.createConnection({
@@ -26,11 +32,11 @@ connection.connect(function(err) {
   choices();
 });
 
-
-function showTable () {
-    //query joined tables
-    //console.table(res)??
-}
+//////////test console.table after connection, using below function and a query, does it print the database in console?
+// function showTable () {
+//     //query joined tables
+//     //console.table(res)??
+// }
 
 function choices () {
     inquirer.prompt([
@@ -51,7 +57,7 @@ function choices () {
 
         let userChoice = answer.choice;
         if(userChoice === "View All Employees") {
-            showTable();
+            employee.viewEmployees();
         }
         else if (userChoice === "View All Employees BY Role") {
             employeesByRole();
@@ -65,20 +71,13 @@ function choices () {
         else if (userChoice === "UPDATE Employee Role") {
 
         }
+        else {
+            connection.end();
+        }
     })
 }
 
-function employeesByRole () {
-    inquirer.prompt([
-
-    ]);
-}
-
-function employeesByDep () {
-    inquirer.prompt([
-
-    ]);
-}
+//object.methodname.then()
 
 function addEmployee () {
     inquirer.prompt([
