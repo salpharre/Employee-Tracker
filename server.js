@@ -1,14 +1,6 @@
 const mysql = require("mysql");
 const inquirer = require("inquirer");
 const cTable = require("console.table");
-const Employee = require("./lib/Employee");
-const Department = require("./lib/Department");
-const Role = require("./lib/Role");
-
-//const all the objects here in global so can call on the different funcions
-const employee = new Employee();
-const department = new Department();
-const role = new Role(); 
 
 // create the connection information for the sql database
 const connection = mysql.createConnection({
@@ -32,11 +24,6 @@ connection.connect(function(err) {
   choices();
 });
 
-//////////test console.table after connection, using below function and a query, does it print the database in console?
-// function showTable () {
-//     //query joined tables
-//     //console.table(res)??
-// }
 
 function choices () {
     inquirer.prompt([
@@ -45,41 +32,50 @@ function choices () {
             name:"choice",
             message: "What would you like to do? (Use arrow keys to move up and down)" ,
             choices: [
-                "View All Employees", 
-                "View All Employees BY Role",
-                "View All Employees BY Department",
-                "Add Employees",
-                "UPDATE Employee Role"
+                "View",
+                "Add",
+                "Update",
+                "Exit"
             ],
         }
     ]).then(answer => {
         console.log(answer);
         //change if else to switch/case/default like in greatbay
-        let userChoice = answer.choice;
-        if(userChoice === "View All Employees") {
-            employee.viewEmployees();
-        }
-        else if (userChoice === "View All Roles") {
-            viewRole();
-        }
-        else if (userChoice === "View Departments") {
-            viewDep();
-        }
-        else if (userChoice === "Add Employees") {
-            //
-        }
-        else if (userChoice === "UPDATE Employee Role") {
+        switch (answer.choice) {
+        case "View":
+            view();
+            break;
+        
+        case "Add":
+            add();
+            break;
 
-        }
-        else {
+        case "Update":
+            update();
+            break;
+
+        case "Exit":
             connection.end();
+            console.log("All Done!");
+            break;
         }
     })
 }
 
-//object.methodname.then()
+//"View All Employees", 
+// "View All Roles",
+// "View All Departments",
+// "Add Employees",
+// "UPDATE Employee Role",
 
-function addEmployee () {
+function view() {
+    inquirer.prompt([
+      //choices as to what they want to view
+
+    ]);
+}
+
+function add() {
     inquirer.prompt([
         //first name
         //last name
@@ -90,7 +86,7 @@ function addEmployee () {
     ]);
 }
 
-function updateRole () {
+function update() {
     inquirer.prompt([
         //change role for employee
             //call object.method for updateRole
@@ -99,3 +95,72 @@ function updateRole () {
     ]);
 }
 
+////////////////FUNCITONS FOR QUERIES//////////////////
+
+function viewEmployees() {
+    connection.query(
+        "SELECT employee.id, employee.first_name, employee.last_name, role.title, role.salary, department.department_name, concat(manager.first_name, ' ', manager.last_name) AS manager FROM employee LEFT JOIN employee AS manager ON employee.manager_id = manager.id LEFT JOIN role ON employee.role_id = role.id LEFT JOIN department ON role.department_id = department.id", function(err, results) {
+        if (err) throw err;
+        console.table(results);
+    });
+};
+
+function addEmployeeName() {
+    connection.query("INSERT INTO employee SET ?", [
+        {
+            first_name: answer.first,
+            last_name: answer.last
+        }
+    ],
+    function(error) {
+        if (err) throw err;
+    });
+};
+
+function addDep() {
+    connection.query("INSERT INTO department SET ?", [
+        {
+            department_name: "",
+        }
+    ],
+    function(error) {
+        if (err) throw err;
+    });
+};
+
+function viewDep() {
+    connection.query("SELECT * FROM department", function(err, results) {
+        if (err) throw err;
+        console.table(results);
+    });
+};
+
+function viewRoles() {
+    connection.query("SELECT * FROM role", function(err, results) {
+        if (err) throw err;
+        console.table(results);
+    });
+}
+
+function addRole() {
+    connection.query("", [
+        {
+            title: answer.title
+        }
+    ],
+    function(error) {
+        if (err) throw err;
+    });
+};
+
+function updateRoleItems() {
+    connection.query("", [
+        {
+            title: answer.title,
+            salary: answer.salary
+        }
+    ],
+    function(error) {
+        if (err) throw err;
+    });
+};
