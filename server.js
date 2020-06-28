@@ -54,16 +54,16 @@ function choices () {
         }
     ]).then(answer => {
         console.log(answer);
-
+        //change if else to switch/case/default like in greatbay
         let userChoice = answer.choice;
         if(userChoice === "View All Employees") {
             employee.viewEmployees();
         }
-        else if (userChoice === "View All Employees BY Role") {
-            employeesByRole();
+        else if (userChoice === "View All Roles") {
+            viewRole();
         }
-        else if (userChoice === "View All Employees BY Department") {
-            employeesByDep();
+        else if (userChoice === "View Departments") {
+            viewDep();
         }
         else if (userChoice === "Add Employees") {
             //
@@ -86,6 +86,7 @@ function addEmployee () {
         //title
         //department
         //salary
+
     ]);
 }
 
