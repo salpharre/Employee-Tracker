@@ -20,7 +20,7 @@ CREATE TABLE department (
 CREATE TABLE role (
   -- Integer called "id" that auto increments and cannot contain null
   id INTEGER NOT NULL AUTO_INCREMENT,
-  -- Makes a string column called "name" which cannot contain null --
+  -- Makes a string column called "title" which cannot contain null --
   title VARCHAR(30) NOT NULL,
   -- Makes a decimal column called "salary" which cannot contain null --
   salary DECIMAL NOT NULL,

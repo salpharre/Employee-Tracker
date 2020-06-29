@@ -20,15 +20,19 @@ VALUES  ("Jane", "Doe", 4, null),
         ("Jennifer", "Grass", 2, 2),
         ("Jacob", "Cob", 1, null);
 
-SELECT 
-	employee.id, 
-    employee.first_name,
-    employee.last_name, 
-    role.title, 
-    role.salary, 
-    department.department_name, 
-    concat(manager.first_name, " ", manager.last_name) AS manager   
-FROM employee
-LEFT JOIN employee AS manager ON employee.manager_id = manager.id
-LEFT JOIN role ON employee.role_id = role.id
-LEFT JOIN department ON role.department_id = department.id;
+SELECT * FROM department;
+SELECT * FROM role;
+SELECT * FROM employee;
+
+-- SELECT 
+	-- employee.id, 
+--    employee.first_name,
+--    employee.last_name, 
+--    role.title, 
+--    role.salary, 
+--    department.department_name, 
+--    concat(manager.first_name, " ", manager.last_name) AS manager   
+-- FROM employee
+-- LEFT JOIN employee AS manager ON employee.manager_id = manager.id
+-- LEFT JOIN role ON employee.role_id = role.id
+-- LEFT JOIN department ON role.department_id = department.id;

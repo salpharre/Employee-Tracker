@@ -25,7 +25,7 @@ To run the application:
 1. Fork it
 2. `git clone`
 3. In directory, follow installation instructions
-4. In directory, run `node start` and follow prompts
+4. In directory, run `node server.js` and follow prompts
 
 For demo:
 
