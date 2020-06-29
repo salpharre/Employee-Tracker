@@ -219,26 +219,18 @@ function updateEmpRole() {
                 message: "Choose the title you would like to change the employee to"
             }
         ]).then(answer => {
-            //get id of title in role table
+            //get id of title in role table for employee table
             let chosenRole;
             for (let i = 0; i < results.length; i++) {
                 if (results[i].title === answer.chooseRole) {
-                    chosenRole = results[i].id
+                    chosenRole = results[i].title
                 }
             }
 
             //query employee table to change role_id for employee
             connection.query(
-                "UPDATE employee SET ? WHERE ?",
-                [
-                    {
-                        role_id: chosenRole
-                    },
-                    {
-                        first_name: answer.first,
-                        last_name: answer.last
-                    }
-                ],
+                "UPDATE employee SET ? WHERE first_name = ? AND last_name = ?",
+                [{ role_id: chosenRole}, answer.first, answer.last],
                 function (err) {
                     if (err) throw err;
                     console.log("Employee Role update was succesful!");
