@@ -216,7 +216,7 @@ function updateEmpRole() {
                     }
                     return choiceArray;
                 },
-                message: "Choose the role you would like to change the employee to"
+                message: "Choose the title you would like to change the employee to"
             }
         ]).then(answer => {
             //get id of title in role table
@@ -232,7 +232,7 @@ function updateEmpRole() {
                 "UPDATE employee SET ? WHERE ?",
                 [
                     {
-                        role_id: chosentitem
+                        role_id: chosenRole
                     },
                     {
                         first_name: answer.first,
@@ -253,7 +253,7 @@ function updateEmpRole() {
 
 function viewAllEmployees() {
     connection.query(
-        "SELECT employee.id, employee.first_name, employee.last_name, role.title, role.salary, department.department_name, concat(manager.first_name, ' ', manager.last_name) AS manager FROM employee LEFT JOIN employee AS manager ON employee.manager_id = manager.id LEFT JOIN role ON employee.role_id = role.id LEFT JOIN department ON role.department_id = department.id", function (err, results) {
+        "SELECT employee.id, employee.first_name, employee.last_name, employee.role_id, role.salary, department.department_name, concat(manager.first_name, ' ', manager.last_name) AS manager FROM employee LEFT JOIN employee AS manager ON employee.manager_id = manager.id LEFT JOIN role ON employee.role_id = role.title LEFT JOIN department ON role.department_id = department.department_name", function (err, results) {
             if (err) throw err;
             console.table(results);
             choices();

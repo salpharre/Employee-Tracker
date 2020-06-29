@@ -24,12 +24,10 @@ CREATE TABLE role (
   title VARCHAR(30) NOT NULL,
   -- Makes a decimal column called "salary" which cannot contain null --
   salary DECIMAL NOT NULL,
-  -- Makes a integer column called "department_id" --
-  department_id INT NOT NULL,
+  -- Makes a string column called "department_id" which cannot contain null --
+  department_id VARCHAR(30) NOT NULL,
   -- Keywords that define which column is the primary key that uniquely defines the table
-  PRIMARY KEY (id),
-  -- Keywords that references id in department table
-  FOREIGN KEY (department_id) REFERENCES department(id)
+  PRIMARY KEY (id)
 );
 
 -- Creates the table "employee" within employee_trackerDB --
@@ -40,14 +38,10 @@ CREATE TABLE employee (
   first_name VARCHAR(30) NOT NULL,
   -- Makes a sting column called "last_name" --
   last_name VARCHAR(30) NOT NULL,
-  -- Integer column called "role_id" to hold reference to role employee has --
-  role_id INTEGER NOT NULL,
+  -- Makes a sting column called "role_id", is the title this employee has --
+  role_id VARCHAR(30) NOT NULL,
     -- Integer column called "manager_id" to hold reference to a manager employee --
   manager_id INTEGER NULL,
   -- Keywords that define which column is the primary key that uniquely defines the table
-  PRIMARY KEY (id),
-  -- Keywords that references primary key in role table
-  FOREIGN KEY (role_id) REFERENCES role(id),
-  -- Keywords that references 
-  FOREIGN KEY (manager_id) REFERENCES employee(id)
+  PRIMARY KEY (id)
 );

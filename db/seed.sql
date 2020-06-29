@@ -9,16 +9,16 @@ VALUES ("Sales"),
        ("Human Resources");
 
 INSERT INTO role (title, salary, department_id) 
-VALUES  ("VP of Sales", 100000, 1),
-        ("Manager", 60000, 3),
-        ("Tech", 30000, 3),
-        ("VP of HR", 70000, 4);
+VALUES  ("VP of Sales", 100000, "Sales"),
+        ("Manager", 60000, "Quality Assurance"),
+        ("Tech", 30000, "Quality Assurance"),
+        ("VP of HR", 70000, "Human Resources");
 
 INSERT INTO employee (first_name, last_name, role_id, manager_id) 
-VALUES  ("Jane", "Doe", 4, null),
-        ("John", "Doe", 3, null),
-        ("Jennifer", "Grass", 2, 2),
-        ("Jacob", "Cob", 1, null);
+VALUES  ("Jane", "Doe", "VP of Sales", null),
+        ("John", "Doe", "Manager", null),
+        ("Jennifer", "Grass", "Tech", 2),
+        ("Jacob", "Cob", "VP of HR", null);
 
 SELECT * FROM department;
 SELECT * FROM role;
@@ -28,11 +28,11 @@ SELECT * FROM employee;
 	-- employee.id, 
 --    employee.first_name,
 --    employee.last_name, 
---    role.title, 
+--    employee.role_id, 
 --    role.salary, 
 --    department.department_name, 
 --    concat(manager.first_name, " ", manager.last_name) AS manager   
 -- FROM employee
 -- LEFT JOIN employee AS manager ON employee.manager_id = manager.id
--- LEFT JOIN role ON employee.role_id = role.id
+-- LEFT JOIN role ON employee.role_id = role.title
 -- LEFT JOIN department ON role.department_id = department.id;
