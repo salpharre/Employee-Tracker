@@ -1,8 +1,8 @@
 # Employee-Tracker
 
-![GitHub last commit](https://img.shields.io/github/last-commit/salpharre/Team-Profile-Generator) ![npm version](https://badge.fury.io/js/inquirer.svg)
+![GitHub last commit](https://img.shields.io/github/last-commit/salpharre/Employee-Tracker) ![npm version](https://badge.fury.io/js/inquirer.svg)
 
-CLI application to track your employees.
+CLI application to track your employees utilizing a database built with MySQL.
 
 ## Table of Contents
 
@@ -19,7 +19,34 @@ CLI application to track your employees.
 Enter the following to install:
 `npm install or npm i`
 
+and
+
+Use schema.sql to create database in MySQL,
+
+and
+
+Change any of below information to match your own localhost
+
+`
+const connection = mysql.createConnection({
+    host: "localhost",
+
+    // Your port; if not 3306
+    port: 3306,
+
+    // Your username
+    user: "root",
+
+    // Your password
+    password: "area",
+    database: "employee_trackerDB",
+});
+`
+
 ### Usage
+
+To be used to track employees within your company. Upon the start of the CLI application, you will be prompted to answer questions that will populate three tables within the database, to view the entirety of all the information, choose `View All Employees`. It is recommended you select any of the three view options before adding new information.
+
 
 To run the application:
 1. Fork it
@@ -27,7 +54,8 @@ To run the application:
 3. In directory, follow installation instructions
 4. In directory, run `node server.js` and follow prompts
 
-For demo:
+
+DEMO:
 
 [To youtube!]() - coming soon!
 
@@ -36,14 +64,14 @@ For demo:
 * VS Code v1.46.1
 * shields.io
 * Node v12.16.1
-* Express
-* MySQL v
+* MySQL
+* console.table
 
 ### Tests
 
 Enter the following to test:
 
-`npm run test`
+`no tests`
 
 ### Contributors
 
@@ -55,4 +83,4 @@ None
 
 ### Launch
 
-Date application releases: `June 27th, 2020`
+Date application releases: `June 30th, 2020`

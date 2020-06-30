@@ -279,8 +279,10 @@ function updateEmpRole() {
     });
 };
 
+
 ////////////////View FUNCITONS FOR QUERIES//////////////////
 
+//queries the joined tables
 function viewAllEmployees() {
     connection.query(
         "SELECT employee.id, employee.first_name, employee.last_name, employee.role_id, role.salary, department.department_name, concat(manager.first_name, ' ', manager.last_name) AS manager FROM employee LEFT JOIN employee AS manager ON employee.manager_id = manager.id LEFT JOIN role ON employee.role_id = role.title LEFT JOIN department ON role.department_id = department.department_name", function (err, results) {
@@ -289,7 +291,7 @@ function viewAllEmployees() {
             choices();
         });
 };
-
+//queries department table
 function viewDep() {
     connection.query("SELECT * FROM department", function (err, results) {
         if (err) throw err;
@@ -297,7 +299,7 @@ function viewDep() {
         choices();
     });
 };
-
+//queries role table
 function viewRoles() {
     connection.query("SELECT * FROM role", function (err, results) {
         if (err) throw err;
