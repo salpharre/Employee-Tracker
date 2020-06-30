@@ -28,7 +28,7 @@ and
 Change any of below information to match your own localhost:
 
 `
-const connection = mysql.createConnection({
+    //name of your host
     host: "localhost",
 
     // Your port; if not 3306
@@ -40,7 +40,6 @@ const connection = mysql.createConnection({
     // Your password
     password: "area",
     database: "employee_trackerDB",
-});
 `
 
 ### Usage
