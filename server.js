@@ -15,8 +15,6 @@ const connection = mysql.createConnection({
     // Your password
     password: "area",
     database: "employee_trackerDB",
-
-    multipleStatements: true
 });
 
 // connect to the mysql server and sql database
@@ -85,67 +83,72 @@ function choices() {
 }
 
 
-// function addEmployee() {
-//     //query role and department tables in a multi statement
-//     connection.query("SELECT * FROM role; SELECT * FROM department", function(err, resulst) {
-//         if (err) throw err;
-//         //inquire user for name, role and department and manager of employee
-//         inquirer.prompt([
-//             {
-//                 type: "input",
-//                 name: "fname",
-//                 message: "Enter first name"
-//             },
-//             {
-//                 type: "input",
-//                 name: "lname",
-//                 message: "Enter last name"
-//             },
-//             {
-//                 type: "list",
-//                 name: "role4emp",
-//                 choices: function() {
-//                     var roleArray = [];
-//                     for (var i = 0; i < results[0].length; i++) {
-//                       roleArray.push(results[0][i].title);
-//                     }
-//                     return roleArray;
-//                 },
-//                 message: "What title does this employee have?"
-//             },
-//             {
-//                 type: "list",
-//                 name: "dep4emp",
-//                 choices: function() {
-//                     var depArray = [];
-//                     for (var i = 0; i < results[1].length; i++) {
-//                       depArray.push(results[1][i].department_name);
-//                     }
-//                     return depArray;
-//                 },
-//                 message: "What department is this employee a part of?"
-//             },
-//         ]).then(answer => {
-//             //get ids for corresponding tables, role and department
-
-
-
-//             connection.query(
-//                 "INSERT INTO employee SET ?",
-//                 {
-//                     first_name: answer.fname,
-//                     last_name: answer.lname,
-//                     role_id: ,
-//                     manager_id: ,
-//                 },
-//                 function(err) {
-//                     if (err) throw err;
-//                     console.log("New Employee add Successfully!")
-//                 }
-//             )
-//         });
-//     })
-// };
+function addEmployee() {
+    //query role table to grab title
+    connection.query("SELECT * FROM role", function(err, results) {
+        if (err) throw err;
+        //inquire user for name, role and department and manager of employee
+        inquirer.prompt([
+            {
+                type: "input",
+                name: "fname",
+                message: "Enter first name"
+            },
+            {
+                type: "input",
+                name: "lname",
+                message: "Enter last name"
+            },
+            {
+                type: "list",
+                name: "roleForEmp",
+                choices: function() {
+                    let roleArray = [];
+                    for (let i = 0; i < results.length; i++) {
+                      roleArray.push(results[i].title);
+                    }
+                    return roleArray;
+                },
+                message: "What title does this employee have?"
+            },
+            {
+                type: "input",
+                name: "manager",
+                message: "Using the ids corresponding to each employee, enter the manager id number for this employee. (Leave blank if manager is CEO)",
+                validate: function(value) {
+                    if (isNaN(value) === false) {
+                      return true;
+                    }
+                    return false;
+                  },
+                default: 1
+            },
+        ]).then(answer => {
+            //get ids for corresponding tables, role and department
+            let role;
+            for (let i = 0; i < results.length; i++) {
+                if (results[i].title === answer.roleForEmp) {
+                    role = results[i].title;
+                }
+            }
+            //query employee table to insert values
+            connection.query(
+                "INSERT INTO employee SET ?",
+                {
+                    first_name: answer.fname,
+                    last_name: answer.lname,
+                    role_id: role,
+                    manager_id: answer.manager,
+                },
+                function(err) {
+                    if (err) throw err;
+                    console.log("New Employee Added Successfully!")
+                    choices();
+                }
+            )
+        });
+    })
+};
 
 function addRole() {
     //query the database for all existing departments
