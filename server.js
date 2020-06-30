@@ -147,23 +147,58 @@ function choices() {
 //     })
 // };
 
-// function addRole() {
-//     inquirer.prompt([
-//         {
-//             type: "input",
-//             name: "title",
-//             message: "Enter a title"
-//         },
-//         {
-//             type: "input",
-//             name: "salary",
-//             message: "Enter corresponding salary to entered title"
-//         }
-//     ]).then(answer => {
-
-//          connection.query("")
-//     })
-// }
+function addRole() {
+    //query the database for all existing departments
+    connection.query("SELECT department_name FROM department", function (err, results) {
+        if (err) throw err;
+        //prompt user to input title, salary and pick a department the role goes under
+        inquirer.prompt([
+            {
+                type: "input",
+                name: "title",
+                message: "Enter a title"
+            },
+            {
+                type: "input",
+                name: "salary",
+                message: "Enter corresponding salary to entered title"
+            },
+            {
+                type: "list",
+                name: "chooseDep",
+                choices: function () {
+                    let depArray = [];
+                    for (var i = 0; i < results.length; i++) {
+                        depArray.push(results[i].department_name)
+                    }
+                    return depArray;
+                },
+                message: "Choose department this position will be under"
+            }
+        ]).then(answer => {
+            //get department name from department table for role table
+            let chosenDep;
+            for (let i = 0; i < results.length; i++) {
+                if (results[i].department_name === answer.chooseDep) {
+                    chosenDep = results[i].department_name;
+                }
+            }
+            //role table to input title, salary and deparment id
+            connection.query("INSERT INTO role SET ?",
+                {
+                    title: answer.title,
+                    salary: answer.salary,
+                    department_id: chosenDep
+                },
+                function (err) {
+                    if (err) throw err;
+                    console.log("New Employee Added Successfully!");
+                    choices();
+                }
+            )
+        })
+    })
+}
 
 function addDepartment() {
     //prompt user for new department to add
@@ -174,7 +209,7 @@ function addDepartment() {
             message: "Enter a department"
         }
     ]).then(answer => {
-        //query department table to insert
+        //query department table to insert new department
         connection.query(
             "INSERT INTO department SET ?",
             {
@@ -219,7 +254,7 @@ function updateEmpRole() {
                 message: "Choose the title you would like to change the employee to"
             }
         ]).then(answer => {
-            //get id of title in role table for employee table
+            //get title in role table for employee table
             let chosenRole;
             for (let i = 0; i < results.length; i++) {
                 if (results[i].title === answer.chooseRole) {
@@ -230,7 +265,7 @@ function updateEmpRole() {
             //query employee table to change role_id for employee
             connection.query(
                 "UPDATE employee SET ? WHERE first_name = ? AND last_name = ?",
-                [{ role_id: chosenRole}, answer.first, answer.last],
+                [{ role_id: chosenRole }, answer.first, answer.last],
                 function (err) {
                     if (err) throw err;
                     console.log("Employee Role update was succesful!");
@@ -261,7 +296,7 @@ function viewDep() {
 };
 
 function viewRoles() {
-    connection.query("SELECT id, title, salary FROM role", function (err, results) {
+    connection.query("SELECT * FROM role", function (err, results) {
         if (err) throw err;
         console.table(results);
         choices();
