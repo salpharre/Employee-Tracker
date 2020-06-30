@@ -27,20 +27,17 @@ and
 
 Change any of below information to match your own localhost:
 
-`
-    //name of your host
+
+  ``` 
     host: "localhost",
-
-    // Your port; if not 3306
+    
     port: 3306,
-
-    // Your username
+    
     user: "root",
-
-    // Your password
+    
     password: "area",
     database: "employee_trackerDB",
-`
+```
 
 ### Usage
 
