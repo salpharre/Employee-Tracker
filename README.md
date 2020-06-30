@@ -21,11 +21,11 @@ Enter the following to install:
 
 and
 
-Use schema.sql to create database in MySQL,
+Use schema.sql to create database in MySQL Workbench,
 
 and
 
-Change any of below information to match your own localhost
+Change any of below information to match your own localhost:
 
 `
 const connection = mysql.createConnection({
@@ -57,14 +57,14 @@ To run the application:
 
 DEMO:
 
-[To youtube!]() - coming soon!
+[To youtube!](https://youtu.be/8lzWoJKZIdg)
 
 ### Technology
 
 * VS Code v1.46.1
 * shields.io
 * Node v12.16.1
-* MySQL
+* MySQL v8.0.20
 * console.table
 
 ### Tests

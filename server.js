@@ -1,3 +1,4 @@
+//requires packages needed for application
 const mysql = require("mysql");
 const inquirer = require("inquirer");
 const cTable = require("console.table");
@@ -24,7 +25,7 @@ connection.connect(function (err) {
     choices();
 });
 
-
+//prompt user to choose what they want to do
 function choices() {
     inquirer.prompt([
         {
@@ -82,7 +83,7 @@ function choices() {
     })
 }
 
-
+//add to employee table
 function addEmployee() {
     //query role table to grab title
     connection.query("SELECT * FROM role", function(err, results) {
@@ -149,7 +150,7 @@ function addEmployee() {
         });
     })
 };
-
+//add a new role to role table
 function addRole() {
     //query the database for all existing departments
     connection.query("SELECT department_name FROM department", function (err, results) {
@@ -202,7 +203,7 @@ function addRole() {
         })
     })
 }
-
+//add another department to department table
 function addDepartment() {
     //prompt user for new department to add
     inquirer.prompt([
@@ -227,7 +228,7 @@ function addDepartment() {
     });
 };
 
-
+//update role_id in employee table
 function updateEmpRole() {
     //query the database for all employees
     connection.query("SELECT * FROM role", function (err, results) {
